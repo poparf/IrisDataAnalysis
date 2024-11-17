@@ -1,0 +1,181 @@
+1. Introduction
+   - Dataset:
+        The dataset used is called Iris dataset. It was used in Ronald Fisher 1936 paper called "The Use of Multiple Measurements in Taxonomic Problems".[Source: https://rcs.chemometrics.ru/Tutorials/classification/Fisher.pdf]
+        It includes three iris species with 50 samples each as well the following properties about each flower:
+        - SepalLengthCm
+        - SepalWidthCm
+        - PetalLengthCm
+        - PetalWidthCm
+
+        The petal is the colorful part of the flower and the sepal is green, tougher with the purpose of protecting the inner fragile petals.
+
+        The dataset is licensed under "CC0: Public domain" and can be used for learning purposes.
+    - Purpose:
+        The purpose of this analysis is to explore the Iris dataset to understand the relationships between different features of the iris flowers.
+        By applying Principal Components Analysis (PCA) and clustering techniques, we aim to reduce the dimensionality of the data, identify key patterns, and group similar observations together.
+        This will help in visualizing the data more effectively and uncovering any underlying structure within the dataset.
+
+2. Data Description
+    - Variables:
+        - Sepal length
+        - Sepal width
+        - Petal length
+        - Petal width
+
+    - Observations: 
+        - 50 records of each species => 150 of records
+        - Species are:
+            0 = Iris Setosa
+            1 = Iris Versicolor
+            2 = Iris Virginica
+
+    - Data quality assessment:
+      The Iris dataset is well-known for its clean and well-structured data. However, it is important to assess the quality of the data before proceeding with the analysis. The following checks should be performed:
+      - Missing values
+      - Duplicate records
+      - Consistency
+      - Outliers
+
+3. Methodology
+   3.1 Principal Components Analysis
+       - Why PCA: Dimension reduction, feature extraction
+       The iris dataset has 4 dimensions of data. Using PCA we make a 2-D plot of the data.
+       It can also tell us which variable is the most valuable for clustering the data. For example,
+       PCA might tell us that the one of the features is reponsible for separating samples along the X-axis or the Y-axis.
+       It can also tell us how accurate the 2-D plot is.
+       A good analogy would be if you had a shadow of a 3D object, PCA helps you find the best angle to cast that shadow so you can see the most detail in just 2D.
+       It finds the directions where your data varies the most.
+       - Implementation details
+   
+1. Explained Variance Ratio
+    PC1 (72.96%): This principal component explains the majority of the variance in the dataset. It is the most important component for capturing the underlying structure of the data.
+    PC2 (22.85%): Adds substantial additional variance, increasing the cumulative explained variance to 95.81%.
+    PC3 (3.67%): Only a small portion of variance is captured by this component.
+    PC4 (0.52%): Negligible contribution to variance.
+Cumulative Explained Variance
+    After the first two components (PC1 + PC2), 95.81% of the variance is explained. This indicates that the first two PCs are sufficient for most analyses, such as visualization or dimensionality reduction, without losing much information.
+2. Component Loadings
+    The loadings indicate how strongly each feature contributes to each principal component.
+
+    PC1
+    Petal length (0.580) and petal width (0.565) have the strongest positive contributions.
+    Sepal length (0.521) also contributes significantly.
+    Sepal width (-0.269) has a weaker, negative contribution.
+    Interpretation: PC1 is primarily driven by petal-related measurements, indicating that these features are the most influential in differentiating the dataset's structure.
+
+    PC2
+    Sepal width (0.923) dominates this component.
+    Sepal length (0.377) has a smaller positive influence.
+    Petal-related features contribute minimally.
+    Interpretation: PC2 is largely influenced by sepal width, suggesting that this component captures variance orthogonal to petal-related features.
+
+    PC3
+    Sepal length (0.720) has the strongest positive contribution.
+    Petal width (-0.634) has a strong negative contribution.
+    Sepal width and petal length contribute minimally.
+    Interpretation: PC3 captures variance associated with a contrast between sepal length and petal width.
+
+    PC4
+    Petal length (0.801) and petal width (-0.524) contribute oppositely.
+    Sepal length and sepal width contribute minimally.
+    Interpretation: PC4 captures minor variance, mostly related to the interaction between petal length and petal width.
+
+3. Insights
+    Dimensionality Reduction: Retaining PC1 and PC2 suffices for visualization (e.g., 2D scatter plot) or clustering while retaining 95.81% of the dataset's variance.
+    Feature Importance: Petal-related features (length and width) dominate PC1, making them the most important for differentiating Iris species.
+    Potential Applications:
+    If classification or clustering is the goal, focus on PC1 and PC2 as they retain almost all meaningful information.
+    For detailed analysis, PC3 may be examined for its contribution to variance related to sepal-petal contrasts.
+
+
+   3.2 Cluster Analysis
+       - Why clustering: Pattern discovery, grouping
+        To see if a computer can identify clusters ( we can identify ourselvs using our eyes and looking at the graph )
+        we can use k-means cluster.
+        Step 1: Select the number of clusters you want to identify in your data. This is the K in "K-means clustering"
+        Step 2: Randomly select k distinct points
+        Step 3: Measure the distance between the first point and each cluster.
+        Step 4: Assign the point to the neareast cluster
+        Repeat for each point
+        Step 5: Calculate the mean of each cluster
+        Then we repeat using the mean as the point of the cluster
+        If the cluster did not change after the last iteration, we are done.
+
+        We sum the variation of each cluster.
+        We repeat the process as many times as we want to find the attempt with the least variance.
+
+        How to pick K ? 
+        It depends on the case.
+        You can try different values and quantify its 'badness' with the total variation in the clusters.
+
+        If we plot the reduction of variation with the number of clusters K we can see a huge reduction in variation with k= 3.
+        After that the variation doesn't go down as quickly. This is the elbow plot. You can pick K by finding the elow point.
+        
+        In 2D use the euclidian distance. Or Pythagorean theorem.
+       - Implementation details
+       The sklearn library offers the k-means cluster implementation.
+       It is used to fit and predict the clusters based on how many cluster do you want.
+
+4. Results
+   4.1 PCA Results
+        PC1 explains 72.96% of the variance.
+        This means that it explains a third of differences between iris flowers.
+        Togheter with PC2 it explains 95.81% of total variance.
+        These 2 are enough for analysis without losing too much information.
+        PC1 has positive contributions from petal length, petal width and sepal length and has a negative
+        contribution from sepal width. This suggests that PC1 represents overall the size of the flower,
+        especially petal dimensions.
+        PC2 is represented mainly by sepal width.
+
+        See more on pca_analysis_result.txt
+
+   4.2 Clustering Results
+       As we can see from the elbow_curve.png and reduction_of_variation.png
+       from 3 clusters onward the reduction of inertia is small.
+       So we pick 3 clusters. It is also working nicely since we have 3 species of iris.
+       Cluster 0 contains 96 samples.
+        This cluster has the largest mean among clusters when it comes to
+        sepal length, petal length and petal width, indicating a larger flower.
+        It contains Veriscolor and Virginica.
+       Cluster 1 contains 33 samples.
+       Cluster 2 contains 21 samples.
+
+        See more on the analysis.
+
+       
+
+5. Conclusions
+        Reducing from 4 dimentions to 2 dimension will lose some information but not
+        too much as we seen. (5%)
+        PCA assumes linear relationships between variables.
+        Any non-linear patterns in the iris measurments might not be captured.
+        
+        Remember that we scaled the original variables?
+        The method of scaling affects the final result, the visualtion of plots.
+        Different scaling methods leads to different PCAs.
+
+        We used 3 clusters because we knew that there are 3 species. But is that correct?
+        It assumes clear boundaries between species and might miss potential subgroups within species.
+
+        Another thing to keep in mind when running these tests is the random_state variable
+        at the cluster function.
+
+        We also used plotted the first two prinicipal components togheter with 
+       our 3 clusters found. It shows that some species overlap in terms of features.
+       Two species is made fully of mostly one cluster. This means that these two are
+       harder to distinct based on the features provided.
+       One species is divided into 2 clusters. This means that it's caractherstics
+       varies and are no centered around the mean.
+
+
+       Key findings shortly:
+       Setosa is separable from other species.
+       Versicolor and Virginica show some overlap.
+       PCA effectively captures this natural grouping structure.
+
+       Not all features contribute equally to separation. ( look at the heatmap and PCAs coeff. )
+       Some measurments are more important for species discrimination. ( petal length, sepal length )
+
+       For future analyses:
+       Use different initialization for clustering.
+       Include other features of iris's.

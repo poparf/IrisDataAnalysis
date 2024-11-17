@@ -1,0 +1,21 @@
+PCA Analysis Results for Iris Dataset
+=====================================
+
+Explained Variance Ratio:
+PC1: 0.7296
+PC2: 0.2285
+PC3: 0.0367
+PC4: 0.0052
+
+Cumulative Explained Variance Ratio:
+PC1: 0.7296
+PC2: 0.9581
+PC3: 0.9948
+PC4: 1.0000
+
+Component Loadings:
+                        PC1       PC2       PC3       PC4
+sepal length (cm)  0.521066  0.377418  0.719566 -0.261286
+sepal width (cm)  -0.269347  0.923296 -0.244382  0.123510
+petal length (cm)  0.580413  0.024492 -0.142126  0.801449
+petal width (cm)   0.564857  0.066942 -0.634273 -0.523597

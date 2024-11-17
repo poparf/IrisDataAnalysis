@@ -1,0 +1,7 @@
+Clustering Analysis Results for Iris Dataset
+        sepal length (cm)             sepal width (cm)       petal length (cm)       petal width (cm)      
+                     mean   std count             mean   std              mean   std             mean   std
+Cluster                                                                                                    
+0                    6.31  0.62    96             2.90  0.32              4.97  0.77             1.70  0.41
+1                    5.17  0.29    33             3.63  0.27              1.49  0.18             0.27  0.12
+2                    4.75  0.24    21             2.90  0.36              1.76  0.77             0.35  0.34
